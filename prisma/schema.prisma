@@ -109,7 +109,7 @@ model Department {
   updatedAt DateTime @updatedAt
 }
 
-// 2. Thêm Model Major
+// 2. Thêm Model Major - Ngành học / chuyên ngành
 model Major {
   id           Int        @id @default(autoincrement())
   name         String
@@ -122,7 +122,7 @@ model Major {
   updatedAt    DateTime   @updatedAt
 }
 
-// 3. Thêm Model Class
+// 3. Thêm Model Class - Lớp học
 model Class {
   id        Int       @id @default(autoincrement())
   name      String    @unique // VD: CNTT-K24A

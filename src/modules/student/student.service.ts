@@ -1,5 +1,3 @@
-// src/services/student.service.ts
-
 import prisma from "../../lib/prisma.js";
 import type {
   CreateStudentDTO,
