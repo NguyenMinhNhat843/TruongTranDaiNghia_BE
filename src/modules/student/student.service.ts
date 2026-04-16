@@ -4,6 +4,7 @@ import type {
   QueryStudentDTO,
   UpdateStudentDTO,
 } from "./student.dto.js";
+import { toStudentResponse } from "./student.mapper.js";
 
 export class StudentService {
   async create(data: CreateStudentDTO) {
@@ -117,7 +118,7 @@ export class StudentService {
     ]);
 
     return {
-      data,
+      data: data.map(toStudentResponse),
       total,
       page,
       limit,
@@ -138,7 +139,7 @@ export class StudentService {
 
     if (!student) throw new Error("Student not found");
 
-    return student;
+    return toStudentResponse(student);
   }
 
   async update(id: number, data: UpdateStudentDTO) {

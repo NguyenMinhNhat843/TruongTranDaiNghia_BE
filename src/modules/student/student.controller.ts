@@ -13,6 +13,8 @@ import {
 import { StudentService } from "./student.service.js";
 import type { CreateStudentDTO, UpdateStudentDTO } from "./student.dto.js";
 import type { StudentStatus } from "@prisma/client";
+import type { StudentResponse } from "./student.response.js";
+import type { PaginationResponse } from "../../responses/pagination.response.js";
 
 @Route("students")
 @Tags("Student")
@@ -33,7 +35,7 @@ export class StudentController extends Controller {
     @Query() isHasAccount?: boolean,
     @Query() page?: number,
     @Query() limit?: number,
-  ) {
+  ): Promise<PaginationResponse<StudentResponse>> {
     return this.studentService.searchStudent({
       keyword,
       status,

@@ -1,4 +1,4 @@
-import { UserRole } from "@prisma/client";
+import { UserRole, type User } from "@prisma/client";
 
 export interface CreateUserDTO {
   username: string;

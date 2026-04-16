@@ -127,6 +127,99 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"StudentResponse": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"studentCode": {
+						"type": "string"
+					},
+					"fullName": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string",
+						"nullable": true
+					},
+					"status": {
+						"$ref": "#/components/schemas/StudentStatus"
+					},
+					"major": {
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"name",
+							"id"
+						],
+						"type": "object"
+					},
+					"class": {
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"name",
+							"id"
+						],
+						"type": "object",
+						"nullable": true
+					}
+				},
+				"required": [
+					"id",
+					"studentCode",
+					"fullName",
+					"status",
+					"major"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginationResponse_StudentResponse_": {
+				"properties": {
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/StudentResponse"
+						},
+						"type": "array"
+					},
+					"total": {
+						"type": "number",
+						"format": "double"
+					},
+					"page": {
+						"type": "number",
+						"format": "double"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"data",
+					"total",
+					"page",
+					"limit"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"UpdateStudentDTO": {
 				"properties": {
 					"fullName": {
@@ -1208,231 +1301,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"limit": {
-											"type": "number",
-											"format": "double"
-										},
-										"page": {
-											"type": "number",
-											"format": "double"
-										},
-										"total": {
-											"type": "number",
-											"format": "double"
-										},
-										"data": {
-											"items": {
-												"allOf": [
-													{
-														"properties": {
-															"class": {
-																"properties": {
-																	"majorId": {
-																		"type": "number",
-																		"format": "double"
-																	},
-																	"updatedAt": {
-																		"type": "string",
-																		"format": "date-time"
-																	},
-																	"createdAt": {
-																		"type": "string",
-																		"format": "date-time"
-																	},
-																	"id": {
-																		"type": "number",
-																		"format": "double"
-																	},
-																	"name": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"majorId",
-																	"updatedAt",
-																	"createdAt",
-																	"id",
-																	"name"
-																],
-																"type": "object"
-															},
-															"major": {
-																"properties": {
-																	"code": {
-																		"type": "string"
-																	},
-																	"departmentId": {
-																		"type": "number",
-																		"format": "double"
-																	},
-																	"updatedAt": {
-																		"type": "string",
-																		"format": "date-time"
-																	},
-																	"createdAt": {
-																		"type": "string",
-																		"format": "date-time"
-																	},
-																	"id": {
-																		"type": "number",
-																		"format": "double"
-																	},
-																	"name": {
-																		"type": "string"
-																	}
-																},
-																"required": [
-																	"code",
-																	"departmentId",
-																	"updatedAt",
-																	"createdAt",
-																	"id",
-																	"name"
-																],
-																"type": "object"
-															},
-															"user": {
-																"properties": {
-																	"updatedAt": {
-																		"type": "string",
-																		"format": "date-time"
-																	},
-																	"createdAt": {
-																		"type": "string",
-																		"format": "date-time"
-																	},
-																	"isActive": {
-																		"type": "boolean"
-																	},
-																	"role": {
-																		"$ref": "#/components/schemas/_36_Enums.UserRole"
-																	},
-																	"email": {
-																		"type": "string"
-																	},
-																	"password": {
-																		"type": "string"
-																	},
-																	"username": {
-																		"type": "string"
-																	},
-																	"id": {
-																		"type": "number",
-																		"format": "double"
-																	}
-																},
-																"required": [
-																	"updatedAt",
-																	"createdAt",
-																	"isActive",
-																	"role",
-																	"email",
-																	"password",
-																	"username",
-																	"id"
-																],
-																"type": "object"
-															}
-														},
-														"required": [
-															"class",
-															"major",
-															"user"
-														],
-														"type": "object"
-													},
-													{
-														"properties": {
-															"classId": {
-																"type": "number",
-																"format": "double"
-															},
-															"majorId": {
-																"type": "number",
-																"format": "double"
-															},
-															"status": {
-																"$ref": "#/components/schemas/_36_Enums.StudentStatus"
-															},
-															"enrollmentDate": {
-																"type": "string",
-																"format": "date-time"
-															},
-															"citizenId": {
-																"type": "string"
-															},
-															"studentCode": {
-																"type": "string"
-															},
-															"userId": {
-																"type": "number",
-																"format": "double"
-															},
-															"address": {
-																"type": "string"
-															},
-															"phone": {
-																"type": "string"
-															},
-															"gender": {
-																"type": "string"
-															},
-															"birthday": {
-																"type": "string",
-																"format": "date-time"
-															},
-															"fullName": {
-																"type": "string"
-															},
-															"updatedAt": {
-																"type": "string",
-																"format": "date-time"
-															},
-															"createdAt": {
-																"type": "string",
-																"format": "date-time"
-															},
-															"email": {
-																"type": "string"
-															},
-															"id": {
-																"type": "number",
-																"format": "double"
-															}
-														},
-														"required": [
-															"classId",
-															"majorId",
-															"status",
-															"enrollmentDate",
-															"citizenId",
-															"studentCode",
-															"userId",
-															"address",
-															"phone",
-															"gender",
-															"birthday",
-															"fullName",
-															"updatedAt",
-															"createdAt",
-															"email",
-															"id"
-														],
-														"type": "object"
-													}
-												]
-											},
-											"type": "array"
-										}
-									},
-									"required": [
-										"limit",
-										"page",
-										"total",
-										"data"
-									],
-									"type": "object"
+									"$ref": "#/components/schemas/PaginationResponse_StudentResponse_"
 								}
 							}
 						}
@@ -1515,260 +1384,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"allOf": [
-										{
-											"properties": {
-												"gradResults": {
-													"items": {
-														"properties": {
-															"studentId": {
-																"type": "number",
-																"format": "double"
-															},
-															"status": {
-																"type": "string"
-															},
-															"id": {
-																"type": "number",
-																"format": "double"
-															}
-														},
-														"required": [
-															"studentId",
-															"status",
-															"id"
-														],
-														"type": "object"
-													},
-													"type": "array"
-												},
-												"grades": {
-													"items": {
-														"properties": {
-															"subject": {
-																"type": "string"
-															},
-															"score": {
-																"type": "number",
-																"format": "double"
-															},
-															"studentId": {
-																"type": "number",
-																"format": "double"
-															},
-															"id": {
-																"type": "number",
-																"format": "double"
-															}
-														},
-														"required": [
-															"subject",
-															"score",
-															"studentId",
-															"id"
-														],
-														"type": "object"
-													},
-													"type": "array"
-												},
-												"class": {
-													"properties": {
-														"majorId": {
-															"type": "number",
-															"format": "double"
-														},
-														"updatedAt": {
-															"type": "string",
-															"format": "date-time"
-														},
-														"createdAt": {
-															"type": "string",
-															"format": "date-time"
-														},
-														"id": {
-															"type": "number",
-															"format": "double"
-														},
-														"name": {
-															"type": "string"
-														}
-													},
-													"required": [
-														"majorId",
-														"updatedAt",
-														"createdAt",
-														"id",
-														"name"
-													],
-													"type": "object"
-												},
-												"major": {
-													"properties": {
-														"code": {
-															"type": "string"
-														},
-														"departmentId": {
-															"type": "number",
-															"format": "double"
-														},
-														"updatedAt": {
-															"type": "string",
-															"format": "date-time"
-														},
-														"createdAt": {
-															"type": "string",
-															"format": "date-time"
-														},
-														"id": {
-															"type": "number",
-															"format": "double"
-														},
-														"name": {
-															"type": "string"
-														}
-													},
-													"required": [
-														"code",
-														"departmentId",
-														"updatedAt",
-														"createdAt",
-														"id",
-														"name"
-													],
-													"type": "object"
-												},
-												"user": {
-													"properties": {
-														"updatedAt": {
-															"type": "string",
-															"format": "date-time"
-														},
-														"createdAt": {
-															"type": "string",
-															"format": "date-time"
-														},
-														"isActive": {
-															"type": "boolean"
-														},
-														"role": {
-															"$ref": "#/components/schemas/_36_Enums.UserRole"
-														},
-														"email": {
-															"type": "string"
-														},
-														"password": {
-															"type": "string"
-														},
-														"username": {
-															"type": "string"
-														},
-														"id": {
-															"type": "number",
-															"format": "double"
-														}
-													},
-													"required": [
-														"updatedAt",
-														"createdAt",
-														"isActive",
-														"role",
-														"email",
-														"password",
-														"username",
-														"id"
-													],
-													"type": "object"
-												}
-											},
-											"required": [
-												"gradResults",
-												"grades",
-												"class",
-												"major",
-												"user"
-											],
-											"type": "object"
-										},
-										{
-											"properties": {
-												"classId": {
-													"type": "number",
-													"format": "double"
-												},
-												"majorId": {
-													"type": "number",
-													"format": "double"
-												},
-												"status": {
-													"$ref": "#/components/schemas/_36_Enums.StudentStatus"
-												},
-												"enrollmentDate": {
-													"type": "string",
-													"format": "date-time"
-												},
-												"citizenId": {
-													"type": "string"
-												},
-												"studentCode": {
-													"type": "string"
-												},
-												"userId": {
-													"type": "number",
-													"format": "double"
-												},
-												"address": {
-													"type": "string"
-												},
-												"phone": {
-													"type": "string"
-												},
-												"gender": {
-													"type": "string"
-												},
-												"birthday": {
-													"type": "string",
-													"format": "date-time"
-												},
-												"fullName": {
-													"type": "string"
-												},
-												"updatedAt": {
-													"type": "string",
-													"format": "date-time"
-												},
-												"createdAt": {
-													"type": "string",
-													"format": "date-time"
-												},
-												"email": {
-													"type": "string"
-												},
-												"id": {
-													"type": "number",
-													"format": "double"
-												}
-											},
-											"required": [
-												"classId",
-												"majorId",
-												"status",
-												"enrollmentDate",
-												"citizenId",
-												"studentCode",
-												"userId",
-												"address",
-												"phone",
-												"gender",
-												"birthday",
-												"fullName",
-												"updatedAt",
-												"createdAt",
-												"email",
-												"id"
-											],
-											"type": "object"
-										}
-									]
+									"$ref": "#/components/schemas/StudentResponse"
 								}
 							}
 						}
