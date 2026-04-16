@@ -21,7 +21,9 @@ export class MajorController extends Controller {
 
   @Post("/")
   async create(@Body() body: CreateMajorDTO) {
-    return this.majorService.create(body);
+    return this.majorService.create({
+      data: body,
+    });
   }
 
   @Get("/search")
@@ -46,16 +48,23 @@ export class MajorController extends Controller {
 
   @Get("{id}")
   async findById(@Path() id: number) {
-    return this.majorService.findById(id);
+    return this.majorService.findById({
+      where: { id },
+    });
   }
 
   @Put("{id}")
   async update(@Path() id: number, @Body() body: UpdateMajorDTO) {
-    return this.majorService.update(id, body);
+    return this.majorService.update({
+      where: { id },
+      data: body,
+    });
   }
 
   @Delete("{id}")
   async delete(@Path() id: number) {
-    return this.majorService.delete(id);
+    return this.majorService.delete({
+      where: { id },
+    });
   }
 }
