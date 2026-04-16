@@ -1,0 +1,151 @@
+// Đây là file cấu hình chính của Prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Bạn có thể đổi thành "mysql" hoặc "sqlite" tùy nhu cầu
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  email     String?  @unique
+  role      UserRole @default(STAFF) // Phân cấp Role chính
+  isActive  Boolean  @default(true)
+  
+  // Quan hệ 1:1 với Profile nghiệp vụ
+  staff     Staff?
+  student   Student?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  STAFF
+  TEACHER
+  STUDENT
+}
+
+// --- PHÂN HỆ NHÂN SỰ ---
+model Staff {
+  id           Int        @id @default(autoincrement())
+  staffCode    String     @unique // Mã nhân viên (VD: NV001)
+  fullName     String
+  birthday     DateTime?
+  gender       String?
+  phone        String?
+  address      String?
+  
+  // Liên kết hệ thống
+  user         User       @relation(fields: [userId], references: [id])
+  userId       Int        @unique
+  
+  // Liên kết tổ chức
+  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId Int
+
+  position     String?    // Chức vụ: Trưởng khoa, Giảng viên...
+  isTeaching   Boolean    @default(true) // Có tham gia giảng dạy không
+
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+// --- PHÂN HỆ HỌC SINH ---
+model Student {
+  id           Int           @id @default(autoincrement())
+  studentCode  String        @unique // Mã số học sinh (VD: HS2024001)
+  fullName     String
+  birthday     DateTime
+  gender       String
+  phone        String?
+  email        String?
+  address      String?
+  citizenId    String?       @unique // Số CCCD
+  
+  // Thông tin nhập học
+  enrollmentDate DateTime    @default(now())
+  status       StudentStatus @default(STUDYING)
+
+  // Liên kết hệ thống (Có thể null nếu học sinh chưa được cấp account)
+  user         User?         @relation(fields: [userId], references: [id])
+  userId       Int?          @unique
+
+  // Liên kết học thuật
+  major        Major         @relation(fields: [majorId], references: [id])
+  majorId      Int
+  class        Class?        @relation(fields: [classId], references: [id])
+  classId      Int?
+
+  // Quan hệ khác
+  grades       Grade[]
+  gradResults  GraduationResult[]
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+enum StudentStatus {
+  STUDYING    // Đang học
+  DROPPED     // Thôi học
+  SUSPENDED   // Bảo lưu
+  GRADUATED   // Đã tốt nghiệp
+}
+
+// 1. Thêm Model Department
+// Phòng ban / Khoa
+model Department {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  code      String   @unique
+  staffs    Staff[]
+  majors    Major[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 2. Thêm Model Major
+model Major {
+  id           Int        @id @default(autoincrement())
+  name         String
+  code         String     @unique
+  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId Int
+  students     Student[]
+  classes      Class[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+// 3. Thêm Model Class
+model Class {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique // VD: CNTT-K24A
+  major     Major     @relation(fields: [majorId], references: [id])
+  majorId   Int
+  students  Student[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// 4. Thêm Model Grade (Tạm thời để đơn giản để chạy được migrate)
+model Grade {
+  id        Int     @id @default(autoincrement())
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId Int
+  score     Float?
+  subject   String // Sau này mình tách Subject sau
+}
+
+// 5. Thêm Model GraduationResult
+model GraduationResult {
+  id        Int     @id @default(autoincrement())
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId Int
+  status    String  // PASSED, FAILED...
+}

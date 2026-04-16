@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext" /* Hoặc "NodeNext" */,
+    "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "paths": {
+    "@controllers/*": ["src/controllers/*"],
+    "@services/*": ["src/services/*"]
+  }
+}
