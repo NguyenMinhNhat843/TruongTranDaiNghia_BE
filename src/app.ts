@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import { getOpenApiDocumentation } from "./config/swagger.js";
-import departmentRoutes from "./modules/department/department.routes.js";
+import { RegisterRoutes } from "./routes/routes.js";
 
 dotenv.config();
 
@@ -11,12 +11,15 @@ const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
-// Route cho Swagger
-const swaggerDoc = getOpenApiDocumentation();
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+// 1. Gắn Swagger UI (Đọc từ file build/swagger.json do TSOA gen)
+app.use("/api-docs", swaggerUi.serve, async (_req: any, res: any) => {
+  return res.send(
+    swaggerUi.generateHTML(await import("../build/swagger.json")),
+  );
+});
 
-// Route
-app.use("/api/departments", departmentRoutes);
+// 2. Đăng ký các Route mà TSOA đã gen
+RegisterRoutes(app);
 
 // middleware xử lý lỗi chung
 app.use((err: any, req: any, res: any, next: any) => {

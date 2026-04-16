@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "nodenext",
-    "moduleResolution": "nodenext" /* Hoặc "NodeNext" */,
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext" /* Hoặc "NodeNext" */,
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "ts-node": {
     "esm": true,

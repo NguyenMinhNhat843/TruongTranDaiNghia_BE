@@ -4,7 +4,7 @@
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --exec tsx src/app.ts",
+    "dev": "concurrently -k -p \"[{name}]\" -n \"TSOA,SRV\" -c \"cyan.bold,green.bold\" \"npm run tsoa:watch\" \"npm run server:dev\"",
     "build": "tsc",
     "start": "node dist/app.js",
     "db:migrate": "npx prisma migrate dev",
@@ -13,7 +13,11 @@
     "db:studio": "npx prisma studio",
     "db:seed": "ts-node prisma/seed.ts",
     "db:push": "npx prisma db push",
-    "db:deploy": "npx prisma migrate deploy"
+    "db:deploy": "npx prisma migrate deploy",
+    "tsoa": " npx tsoa spec-and-routes",
+    "tsoa:gen": "tsoa spec-and-routes",
+    "tsoa:watch": "nodemon --watch src/**/*.controller.ts --ext ts --exec \"npm run tsoa:gen\"",
+    "server:dev": "nodemon --watch src --ext ts --exec \"tsx src/app.ts\""
   },
   "keywords": [],
   "author": "",
@@ -26,6 +30,7 @@
     "express": "^5.2.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
+    "tsoa": "^7.0.0-alpha.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

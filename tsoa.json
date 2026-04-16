@@ -1,0 +1,22 @@
+{
+  "entryFile": "src/app.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/modules/**/*controller.ts"],
+  "spec": {
+    "outputDirectory": "build",
+    "specVersion": 3,
+    "basePath": "/api",
+    "info": {
+      "title": "TruongTranDaiNghia API",
+      "version": "1.0.0"
+    }
+  },
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "routes": {
+    "routesDir": "src/routes",
+    "basePath": "/api"
+  }
+}
