@@ -7,8 +7,66 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"_36_Enums.UserRole": {
+				"type": "string",
+				"enum": [
+					"ADMIN",
+					"STAFF",
+					"TEACHER",
+					"STUDENT"
+				]
+			},
+			"UserRole": {
+				"$ref": "#/components/schemas/_36_Enums.UserRole"
+			},
+			"CreateUserDTO": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserRole"
+					}
+				},
+				"required": [
+					"username",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateUserDTO": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserRole"
+					},
+					"isActive": {
+						"type": "boolean"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
 			"DefaultSelection_Prisma._36_DepartmentPayload_": {
 				"properties": {
+					"code": {
+						"type": "string"
+					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time"
@@ -16,9 +74,6 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
-					},
-					"code": {
-						"type": "string"
 					},
 					"id": {
 						"type": "number",
@@ -29,9 +84,9 @@
 					}
 				},
 				"required": [
+					"code",
 					"updatedAt",
 					"createdAt",
-					"code",
 					"id",
 					"name"
 				],
@@ -81,6 +136,473 @@
 		"contact": {}
 	},
 	"paths": {
+		"/users": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"isActive": {
+											"type": "boolean"
+										},
+										"role": {
+											"$ref": "#/components/schemas/_36_Enums.UserRole"
+										},
+										"email": {
+											"type": "string"
+										},
+										"password": {
+											"type": "string"
+										},
+										"username": {
+											"type": "string"
+										},
+										"id": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"updatedAt",
+										"createdAt",
+										"isActive",
+										"role",
+										"email",
+										"password",
+										"username",
+										"id"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateUserDTO"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "FindAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"updatedAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"isActive": {
+												"type": "boolean"
+											},
+											"role": {
+												"$ref": "#/components/schemas/_36_Enums.UserRole"
+											},
+											"email": {
+												"type": "string"
+											},
+											"password": {
+												"type": "string"
+											},
+											"username": {
+												"type": "string"
+											},
+											"id": {
+												"type": "number",
+												"format": "double"
+											}
+										},
+										"required": [
+											"updatedAt",
+											"createdAt",
+											"isActive",
+											"role",
+											"email",
+											"password",
+											"username",
+											"id"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/users/search": {
+			"get": {
+				"operationId": "QueryUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"updatedAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"isActive": {
+												"type": "boolean"
+											},
+											"role": {
+												"$ref": "#/components/schemas/_36_Enums.UserRole"
+											},
+											"email": {
+												"type": "string"
+											},
+											"password": {
+												"type": "string"
+											},
+											"username": {
+												"type": "string"
+											},
+											"id": {
+												"type": "number",
+												"format": "double"
+											}
+										},
+										"required": [
+											"updatedAt",
+											"createdAt",
+											"isActive",
+											"role",
+											"email",
+											"password",
+											"username",
+											"id"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "email",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "username",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "role",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/UserRole"
+						}
+					},
+					{
+						"in": "query",
+						"name": "isActive",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/users/{id}": {
+			"get": {
+				"operationId": "FindById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"isActive": {
+											"type": "boolean"
+										},
+										"role": {
+											"$ref": "#/components/schemas/_36_Enums.UserRole"
+										},
+										"email": {
+											"type": "string"
+										},
+										"password": {
+											"type": "string"
+										},
+										"username": {
+											"type": "string"
+										},
+										"id": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"updatedAt",
+										"createdAt",
+										"isActive",
+										"role",
+										"email",
+										"password",
+										"username",
+										"id"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"isActive": {
+											"type": "boolean"
+										},
+										"role": {
+											"$ref": "#/components/schemas/_36_Enums.UserRole"
+										},
+										"email": {
+											"type": "string"
+										},
+										"password": {
+											"type": "string"
+										},
+										"username": {
+											"type": "string"
+										},
+										"id": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"updatedAt",
+										"createdAt",
+										"isActive",
+										"role",
+										"email",
+										"password",
+										"username",
+										"id"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUserDTO"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"isActive": {
+											"type": "boolean"
+										},
+										"role": {
+											"$ref": "#/components/schemas/_36_Enums.UserRole"
+										},
+										"email": {
+											"type": "string"
+										},
+										"password": {
+											"type": "string"
+										},
+										"username": {
+											"type": "string"
+										},
+										"id": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"updatedAt",
+										"createdAt",
+										"isActive",
+										"role",
+										"email",
+										"password",
+										"username",
+										"id"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/departments": {
 			"get": {
 				"operationId": "GetAll",

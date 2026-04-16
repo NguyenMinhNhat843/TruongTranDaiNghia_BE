@@ -11,14 +11,14 @@ const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
-// 1. Gắn Swagger UI (Đọc từ file build/swagger.json do TSOA gen)
+// Gắn Swagger UI (Đọc từ file build/swagger.json do TSOA gen)
 app.use("/api-docs", swaggerUi.serve, async (_req: any, res: any) => {
   return res.send(
     swaggerUi.generateHTML(await import("../build/swagger.json")),
   );
 });
 
-// 2. Đăng ký các Route mà TSOA đã gen
+// Đăng ký các Route mà TSOA đã gen
 RegisterRoutes(app);
 
 // middleware xử lý lỗi chung
