@@ -1,13 +1,18 @@
 // src/responses/user.response.ts
-import { UserRole } from "@prisma/client";
+import { UserRole, type User } from "@prisma/client";
 
-export interface UserResponse {
-  id: number;
-  username: string;
-  email?: string | null;
-  role: UserRole;
-  isActive: boolean;
-
-  createdAt: Date;
-  updatedAt: Date;
-}
+export type UserResponse = Pick<
+  User,
+  | "username"
+  | "email"
+  | "role"
+  | "isActive"
+  | "createdAt"
+  | "updatedAt"
+  | "id"
+  | "fullName"
+  | "address"
+  | "birthday"
+  | "gender"
+  | "phone"
+>;

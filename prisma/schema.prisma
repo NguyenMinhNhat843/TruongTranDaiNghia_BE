@@ -9,11 +9,16 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id
   username  String   @unique
   password  String
   email     String?  @unique
   role      UserRole @default(STAFF) // Phân cấp Role chính
+  fullName     String @default("Unknow")
+  gender       String @default("Unknow")
+  phone        String?
+  birthday     DateTime?
+  address      String?
   isActive  Boolean  @default(true)
   
   // Quan hệ 1:1 với Profile nghiệp vụ
@@ -33,21 +38,16 @@ enum UserRole {
 
 // --- PHÂN HỆ NHÂN SỰ ---
 model Staff {
-  id           Int        @id @default(autoincrement())
+  id           String     @id
   staffCode    String     @unique // Mã nhân viên (VD: NV001)
-  fullName     String
-  birthday     DateTime?
-  gender       String?
-  phone        String?
-  address      String?
   
   // Liên kết hệ thống
   user         User       @relation(fields: [userId], references: [id])
-  userId       Int        @unique
+  userId       String     @unique
   
   // Liên kết tổ chức
   department   Department @relation(fields: [departmentId], references: [id])
-  departmentId Int
+  departmentId String
 
   position     String?    // Chức vụ: Trưởng khoa, Giảng viên...
   isTeaching   Boolean    @default(true) // Có tham gia giảng dạy không
@@ -58,14 +58,8 @@ model Staff {
 
 // --- PHÂN HỆ HỌC SINH ---
 model Student {
-  id           Int           @id @default(autoincrement())
+  id           String        @id
   studentCode  String        @unique // Mã số học sinh (VD: HS2024001)
-  fullName     String
-  birthday     DateTime
-  gender       String
-  phone        String?
-  email        String?
-  address      String?
   citizenId    String?       @unique // Số CCCD
   
   // Thông tin nhập học
@@ -74,17 +68,17 @@ model Student {
 
   // Liên kết hệ thống (Có thể null nếu học sinh chưa được cấp account)
   user         User?         @relation(fields: [userId], references: [id])
-  userId       Int?          @unique
+  userId       String?       @unique
 
   // Liên kết học thuật
-  major        Major         @relation(fields: [majorId], references: [id])
-  majorId      Int
-  class        Class?        @relation(fields: [classId], references: [id])
-  classId      Int?
+  major        Major         @relation(fields: [majorId], references: [id]) // Ngành nghề
+  majorId      String
+  class        Class?        @relation(fields: [classId], references: [id]) // Lớp hoc
+  classId      String?
 
   // Quan hệ khác
-  grades       Grade[]
-  gradResults  GraduationResult[]
+  grades       Grade[]      // Điểm số
+  gradResults  GraduationResult[]   // Kết quả thi
 
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -100,9 +94,9 @@ enum StudentStatus {
 // 1. Thêm Model Department
 // Phòng ban / Khoa
 model Department {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
+  id        String   @id
   code      String   @unique
+  name      String   @unique
   staffs    Staff[]
   majors    Major[]
   createdAt DateTime @default(now())
@@ -111,11 +105,11 @@ model Department {
 
 // 2. Thêm Model Major - Ngành học / chuyên ngành
 model Major {
-  id           Int        @id @default(autoincrement())
-  name         String
+  id           String     @id
   code         String     @unique
+  name         String
   department   Department @relation(fields: [departmentId], references: [id])
-  departmentId Int
+  departmentId String
   students     Student[]
   classes      Class[]
   createdAt    DateTime   @default(now())
@@ -124,10 +118,10 @@ model Major {
 
 // 3. Thêm Model Class - Lớp học
 model Class {
-  id        Int       @id @default(autoincrement())
+  id        String    @id
   name      String    @unique // VD: CNTT-K24A
   major     Major     @relation(fields: [majorId], references: [id])
-  majorId   Int
+  majorId   String
   students  Student[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -135,17 +129,19 @@ model Class {
 
 // 4. Thêm Model Grade (Tạm thời để đơn giản để chạy được migrate)
 model Grade {
-  id        Int     @id @default(autoincrement())
+  id        String  @id
   student   Student @relation(fields: [studentId], references: [id])
-  studentId Int
+  studentId String
   score     Float?
   subject   String // Sau này mình tách Subject sau
 }
 
 // 5. Thêm Model GraduationResult
 model GraduationResult {
-  id        Int     @id @default(autoincrement())
+  id        String  @id
   student   Student @relation(fields: [studentId], references: [id])
-  studentId Int
+  studentId String
   status    String  // PASSED, FAILED...
 }
+
+// ========================= Hồ sơ tuyển sinh ===========================

@@ -11,6 +11,8 @@ import { StudentController } from './../modules/student/student.controller';
 import { MajorController } from './../modules/major/major.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { DepartmentController } from './../modules/department/department.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { AuthController } from './../modules/auth/auth.controller';
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from 'express';
 
 
@@ -145,7 +147,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "DefaultSelection_Prisma._36_DepartmentPayload_": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"code":{"dataType":"string","required":true},"updatedAt":{"dataType":"datetime","required":true},"createdAt":{"dataType":"datetime","required":true},"id":{"dataType":"double","required":true},"name":{"dataType":"string","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"code":{"dataType":"string","required":true},"updatedAt":{"dataType":"datetime","required":true},"createdAt":{"dataType":"datetime","required":true},"id":{"dataType":"string","required":true},"name":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Department": {
@@ -167,6 +169,63 @@ const models: TsoaRoute.Models = {
         "properties": {
             "name": {"dataType":"string"},
             "code": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_User.username-or-email-or-role-or-isActive-or-createdAt-or-updatedAt-or-id-or-fullName-or-address-or-birthday-or-gender-or-phone_": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"id":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"email":{"dataType":"string","required":true},"role":{"ref":"_36_Enums.UserRole","required":true},"fullName":{"dataType":"string","required":true},"gender":{"dataType":"string","required":true},"phone":{"dataType":"string","required":true},"birthday":{"dataType":"datetime","required":true},"address":{"dataType":"string","required":true},"isActive":{"dataType":"boolean","required":true},"createdAt":{"dataType":"datetime","required":true},"updatedAt":{"dataType":"datetime","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserResponse": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_User.username-or-email-or-role-or-isActive-or-createdAt-or-updatedAt-or-id-or-fullName-or-address-or-birthday-or-gender-or-phone_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "RegisterResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "message": {"dataType":"string","required":true},
+            "user": {"ref":"UserResponse","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_User.username-or-password-or-email-or-role-or-gender-or-address-or-phone-or-birthday-or-fullName_": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"username":{"dataType":"string","required":true},"password":{"dataType":"string","required":true},"email":{"dataType":"string","required":true},"role":{"ref":"_36_Enums.UserRole","required":true},"fullName":{"dataType":"string","required":true},"gender":{"dataType":"string","required":true},"phone":{"dataType":"string","required":true},"birthday":{"dataType":"datetime","required":true},"address":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_Student.Exclude_keyofStudent.id-or-userId-or-createdAt-or-updatedAt__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"studentCode":{"dataType":"string","required":true},"citizenId":{"dataType":"string","required":true},"enrollmentDate":{"dataType":"datetime","required":true},"status":{"ref":"_36_Enums.StudentStatus","required":true},"majorId":{"dataType":"string","required":true},"classId":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_Student.id-or-userId-or-createdAt-or-updatedAt_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_Student.Exclude_keyofStudent.id-or-userId-or-createdAt-or-updatedAt__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "RegisterRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "username": {"dataType":"string","required":true},
+            "password": {"dataType":"string","required":true},
+            "email": {"dataType":"string","required":true},
+            "role": {"ref":"_36_Enums.UserRole","required":true},
+            "fullName": {"dataType":"string","required":true},
+            "gender": {"dataType":"string","required":true},
+            "phone": {"dataType":"string","required":true},
+            "birthday": {"dataType":"datetime","required":true},
+            "address": {"dataType":"string","required":true},
+            "studentCode": {"dataType":"string","required":true},
+            "citizenId": {"dataType":"string","required":true},
+            "enrollmentDate": {"dataType":"datetime","required":true},
+            "status": {"ref":"_36_Enums.StudentStatus","required":true},
+            "majorId": {"dataType":"string","required":true},
+            "classId": {"dataType":"string","required":true},
+            "confirmPassword": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -886,6 +945,36 @@ export function RegisterRoutes(app: Router) {
                 next,
                 validatedArgs,
                 successStatus: 204,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsAuthController_register: Record<string, TsoaRoute.ParameterSchema> = {
+                data: {"in":"body","name":"data","required":true,"ref":"RegisterRequest"},
+        };
+        app.post('/api/auth/register',
+            ...(fetchMiddlewares<RequestHandler>(AuthController)),
+            ...(fetchMiddlewares<RequestHandler>(AuthController.prototype.register)),
+
+            async function AuthController_register(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsAuthController_register, request, response });
+
+                const controller = new AuthController();
+
+              await templateService.apiHandler({
+                methodName: 'register',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: 201,
               });
             } catch (err) {
                 return next(err);
